@@ -2,5 +2,8 @@ Your teams are:
 <ul>
   {{#each model as |team|}}
     <li>{{team.teamName}}</li>
+    {{#each team.users as |user|}}
+      {{user.username}}
+    {{/each}}
   {{/each}}
 </ul>
