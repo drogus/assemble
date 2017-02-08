@@ -22,6 +22,8 @@ export default Session.extend({
    */
   store: service(),
 
+  currentUser: null,
+
   /**
     A method to get and set the current user's data if authenticated.
 
@@ -33,10 +35,10 @@ export default Session.extend({
       if (this.get('isAuthenticated')) {
         return this.get('store').findRecord('user', 'me').then((user) => {
           this.set('currentUser', user);
-          return this.get('store').query('team', { user_id: this.get('currentUser.id')}).then((teams) => {
-            this.set('currentUserTeams', teams);
-          });
-        }, reject);
+        }, function(error) {
+          console.log("REJECTED: " + error);
+          reject();
+        });
       } else {
         resolve();
       }

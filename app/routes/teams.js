@@ -1,12 +1,11 @@
 import Ember from 'ember';
 
+const { service } = Ember.inject;
+
 export default Ember.Route.extend({
+  session: service(),
+
   model() {
-    return this.get('store').findRecord('user', 'me').then((user) => {
-      this.set('currentUser', user);
-      return this.get('store').query('team', { user_id: this.get('currentUser.id')}).then((teams) => {
-        return teams;
-      });
-    });
+    return this.get('session.currentUser').get('teams');
   }
 });

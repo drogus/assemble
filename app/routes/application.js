@@ -53,6 +53,6 @@ export default Ember.Route.extend(ApplicationRouteMixin,{
     @method _loadCurrentUserData
    */
   _loadCurrentUserData() {
-    this.get('session').loadCurrentUserData();
+    return this.get('session').loadCurrentUserData();
   }
 });
