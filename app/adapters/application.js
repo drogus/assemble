@@ -1,7 +1,8 @@
-import ActiveModelAdapter from 'active-model-adapter';
 import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
+import DS from 'ember-data';
+import ENV from 'assemble/config/environment';
 
-export default ActiveModelAdapter.extend(DataAdapterMixin, {
-  host: 'http://localhost:3000',
+export default DS.JSONAPIAdapter.extend(DataAdapterMixin, {
+  host: ENV.apiHost,
   authorizer: 'authorizer:devise'
 });
