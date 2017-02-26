@@ -22,6 +22,8 @@ export default Session.extend({
    */
   store: service(),
 
+  ajax: service(),
+
   currentUser: null,
 
   /**
@@ -33,12 +35,15 @@ export default Session.extend({
   loadCurrentUserData() {
     return new Ember.RSVP.Promise((resolve, reject) => {
       if (this.get('isAuthenticated')) {
-        return this.get('store').findRecord('user', 'me').then((user) => {
-          this.set('currentUser', user);
-        }, function(error) {
-          console.log("REJECTED: " + error);
-          reject();
-        });
+        return this.get('ajax').request('/users/me').then(user => {
+            this.get('store').pushPayload(user);
+            let storeUser = this.get('store').peekRecord('user', user.data.id);
+            this.set('currentUser', storeUser);
+            resolve();
+          }, function(error) {
+            console.log("REJECTED: " + error);
+            reject();
+          });
       } else {
         resolve();
       }
