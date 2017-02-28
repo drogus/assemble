@@ -5,7 +5,7 @@ module.exports = function(environment) {
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
     modulePrefix: 'assemble',
     environment: environment,
-    baseURL: '/',
+    rootURL: '/',
     locationType: 'hash',
     contentSecurityPolicy: {
       'connect-src': "*"
