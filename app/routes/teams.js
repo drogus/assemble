@@ -6,6 +6,6 @@ export default Ember.Route.extend({
   session: service(),
 
   model() {
-    return this.get('session.currentUser').get('teams');
+    return this.get('session.currentUser.teams');
   }
 });

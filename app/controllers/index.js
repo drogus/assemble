@@ -32,7 +32,7 @@ export default Ember.Controller.extend({
     @property teams
     @type Object
    */
-  teams: alias('session.currentUserTeams'),
+  teams: alias('session.currentUser.teams'),
 
   /**
     This attribute describes the latitude and longitude of the current user, when
