@@ -1,3 +1,5 @@
+import Mirage from 'ember-cli-mirage';
+
 export default function() {
 
   // These comments are here to help you get started. Feel free to delete them.
@@ -24,15 +26,26 @@ export default function() {
     http://www.ember-cli-mirage.com/docs/v0.2.x/shorthands/
   */
 
-  this.get('/users/me', function(schema) {
-    let user = schema.users.find(1);
+  this.get('/users/me', function(schema, request) {
+    let authorization = request.requestHeaders['Authorization'],
+        match = authorization.match(/Token token="[^"]+", email="([^"]+)"/),
+        email = match && match[1],
+        user;
 
-    return {user: user};
+    if (email) {
+      user = schema.users.findBy({ email });
+    }
+
+    if (user) {
+      return user;
+    } else {
+      return new Mirage.Response(401);
+    }
   });
 
   this.get('/teams', function(schema, request) {
     let user = schema.users.find(request.queryParams.user_id);
 
-    return {teams: user.teams.models};
+    return user.teams;
   });
 }

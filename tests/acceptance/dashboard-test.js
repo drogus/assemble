@@ -15,13 +15,13 @@ moduleForAcceptance('Acceptance | dashboard', {
 });
 
 test('visiting /', function(assert) {
-  server.create('user', { username: "Alice", email: 'alice@example.com', password: 'alicepassword' });
-  authenticateSession(this.application);
+  const user = server.create('user', { username: "Alice", email: 'alice@example.com', password: 'alicepassword' });
+  authenticateSession(this.application, { email: user.email, token: 'abc123' });
 
   visit('/');
 
   andThen(function() {
     assert.equal(currentURL(), '/');
-    // assert.equal(find('').text(), 'Hello Alice!')
+    assert.equal(find('.hello-user').text(), 'Hello Alice!');
   });
 });
